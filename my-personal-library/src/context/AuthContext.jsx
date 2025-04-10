@@ -1,15 +1,12 @@
 import { createContext, useContext, useState } from 'react';
 
-// Criação do contexto
 const AuthContext = createContext();
 
-// Provider
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   const login = (email, password) => {
-    // Aqui você pode fazer chamada para API real
-    setUser({ email }); // mock de login
+    setUser({ email });
   };
 
   const logout = () => {
@@ -17,18 +14,18 @@ export function AuthProvider({ children }) {
   };
 
   const register = (email, password) => {
-    // Simulação de registro
     setUser({ email });
   };
 
+  const isAuthenticated = !!user;
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, login, logout, register, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-// Hook personalizado para consumir o contexto
 export function useAuth() {
   return useContext(AuthContext);
 }

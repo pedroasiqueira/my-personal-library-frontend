@@ -1,13 +1,28 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Auth/Login';
-import Register from './pages/Auth/Register'; // se quiser usar depois
+import Register from './pages/Auth/Register';
+import Home from './pages/Home/Home';
+import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/sobre" element={<h1 className="text-xl text-green-600 text-center mt-10">Sobre</h1>} />
+        <Route path="/register" element={<Register />} />
+        
+        {/* Rota protegida */}
+        <Route
+          path="/home"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Rota desconhecida → redireciona para login */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
