@@ -6,10 +6,9 @@ import BookForm from '../../components/BookForm';
 const Edit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { getBookById, editBook } = useBooks();
+  const { getBookById, editBook, loading } = useBooks();
 
-  const book = getBookById(Number(id));
-
+  const book = getBookById(id); // <-- ID como string (MongoDB)
   const [formData, setFormData] = useState({
     title: '',
     author: '',
@@ -25,9 +24,13 @@ const Edit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    editBook(Number(id), formData);
+    editBook(id, formData);
     navigate('/home');
   };
+
+  if (loading) {
+    return <p className="text-center mt-10 text-gray-600">Carregando livro...</p>;
+  }
 
   if (!book) {
     return <p className="text-center mt-10 text-gray-600">Livro não encontrado.</p>;

@@ -1,20 +1,34 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import mockBooks from '../assets/booksArray';
 
-// Criação do contexto
 const BookContext = createContext();
 
-// Provider
 export function BookProvider({ children }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBooks = () => {
-      setTimeout(() => {
-        setBooks(mockBooks);
+    const fetchBooks = async () => {
+      try {
+        const token = localStorage.getItem('access_token');
+
+        const response = await fetch('http://localhost:3000/books/', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro ao buscar livros.');
+        }
+
+        const data = await response.json();
+        setBooks(data); // ← se precisar ajustar o formato, avise
+      } catch (error) {
+        console.error('Erro ao buscar livros:', error);
+        setBooks([]); // garante que a tela não quebre
+      } finally {
         setLoading(false);
-      }, 1000);
+      }
     };
 
     fetchBooks();
@@ -26,15 +40,15 @@ export function BookProvider({ children }) {
 
   const editBook = (id, updatedBook) => {
     setBooks((prev) =>
-      prev.map((book) => (book.id === id ? { ...book, ...updatedBook } : book))
+      prev.map((book) => (book._id === id ? { ...book, ...updatedBook } : book))
     );
   };
 
   const deleteBook = (id) => {
-    setBooks((prev) => prev.filter((book) => book.id !== id));
+    setBooks((prev) => prev.filter((book) => book._id !== id));
   };
 
-  const getBookById = (id) => books.find((book) => book.id === id);
+  const getBookById = (id) => books.find((book) => book._id === id);
 
   return (
     <BookContext.Provider

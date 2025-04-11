@@ -5,14 +5,18 @@ import { useBooks } from '../../context/BookContext';
 const Delete = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { getBookById, deleteBook } = useBooks();
+  const { getBookById, deleteBook, loading } = useBooks();
 
-  const book = getBookById(Number(id));
+  const book = getBookById(id); // <-- ID como string
 
   const handleDelete = () => {
-    deleteBook(Number(id));
+    deleteBook(id);
     navigate('/home');
   };
+
+  if (loading) {
+    return <p className="text-center mt-10 text-gray-600">Carregando livro...</p>;
+  }
 
   if (!book) {
     return <p className="text-center mt-10 text-gray-600">Livro não encontrado.</p>;

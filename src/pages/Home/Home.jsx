@@ -59,13 +59,13 @@ const Home = () => {
                   )}
                   <div className="flex gap-2 mt-3">
                     <button
-                      onClick={() => navigate(`/edit/${book.id}`)}
+                      onClick={() => navigate(`/edit/${book._id}`)}
                       className="text-sm bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md"
                     >
                       Editar
                     </button>
                     <button
-                      onClick={() => navigate(`/delete/${book.id}`)}
+                      onClick={() => navigate(`/delete/${book._id}`)}
                       className="text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
                     >
                       Apagar

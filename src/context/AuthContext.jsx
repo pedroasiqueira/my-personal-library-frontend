@@ -4,19 +4,19 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // novo
 
   // Recupera o token do localStorage ao iniciar
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (token) {
-      // Se quiser, aqui você pode decodificar o token e recuperar infos do usuário
       setUser({ token });
     }
+    setIsLoading(false); // sinaliza que terminou de checar
   }, []);
 
   const login = (email, password) => {
     // Aqui você faria a requisição de login real
-    // Mas se já tem um token vindo de fora, use loginComToken()
     console.warn('Use loginComToken para autenticar com token.');
   };
 
@@ -35,6 +35,10 @@ export function AuthProvider({ children }) {
   };
 
   const isAuthenticated = !!user;
+
+  if (isLoading) {
+    return <div className="flex justify-center items-center h-screen">Carregando...</div>;
+  }
 
   return (
     <AuthContext.Provider
