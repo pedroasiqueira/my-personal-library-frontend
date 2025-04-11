@@ -141,12 +141,12 @@ const BookForm = ({
         </div>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex flex-col-reverse sm:flex-row justify-between gap-3">
         <button
           type="button"
           onClick={() => navigate(-1)}
           disabled={isSubmitting}
-          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium px-6 py-2 rounded-lg"
+          className="bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-100 font-medium px-6 py-2 rounded-lg w-full sm:w-auto"
         >
           Cancelar
         </button>
@@ -154,10 +154,12 @@ const BookForm = ({
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`${
-            isSubmitting ? 'flex items-center bg-blue-400' : 'flex items-center bg-blue-600 hover:bg-blue-700'
-          } text-white font-medium px-6 py-2 rounded-lg transition`}
-        ><Save className="w-4 mr-2" />
+          className={`${isSubmitting
+              ? 'flex items-center justify-center bg-blue-400'
+              : 'flex items-center justify-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600'
+            } text-white font-medium px-6 py-2 rounded-lg transition w-full sm:w-auto`}
+        >
+          <Save className="w-4 mr-2" />
           {isSubmitting ? 'Salvando...' : isEdit ? 'Salvar alterações' : 'Salvar'}
         </button>
       </div>

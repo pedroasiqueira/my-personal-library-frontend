@@ -7,6 +7,7 @@ export function BookProvider({ children }) {
   const { isAuthenticated } = useAuth();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -15,7 +16,7 @@ export function BookProvider({ children }) {
       try {
         const token = localStorage.getItem('access_token');
 
-        const response = await fetch('http://localhost:3000/books/', {
+        const response = await fetch(`${apiUrl}/books/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,7 +39,7 @@ export function BookProvider({ children }) {
     if (isAuthenticated) {
       fetchBooks();
     }
-  }, [isAuthenticated]); // ← vai reexecutar sempre que o login acontecer
+  }, [isAuthenticated, apiUrl]); // ← vai reexecutar sempre que o login acontecer
 
   const addBook = (book) => {
     setBooks((prev) => [...prev, book]);

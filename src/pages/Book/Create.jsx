@@ -18,6 +18,7 @@ const Create = () => {
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ const Create = () => {
       if (!cleanData.endDate) delete cleanData.endDate;
       if (!cleanData.avaliation || cleanData.avaliation === 0) delete cleanData.avaliation;
 
-      const response = await fetch('http://localhost:3000/books', {
+      const response = await fetch(`${apiUrl}/books`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

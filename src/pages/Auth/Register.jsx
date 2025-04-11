@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 function Register() {
   const { loginComToken } = useAuth(); // Função que autentica com o token
   const navigate = useNavigate();
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,7 +34,7 @@ function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/auth/signup', {
+      const response = await fetch(`${apiUrl}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

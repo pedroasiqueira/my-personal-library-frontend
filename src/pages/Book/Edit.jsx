@@ -7,6 +7,7 @@ const Edit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { getBookById, editBook, loading } = useBooks();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const book = getBookById(id);
 
@@ -40,7 +41,7 @@ const Edit = () => {
       if (!updatedData.endDate) delete updatedData.endDate;
       if (!updatedData.avaliation || updatedData.avaliation === 0) delete updatedData.avaliation;
 
-      const response = await fetch(`http://localhost:3000/books/${id}`, {
+      const response = await fetch(`${apiUrl}/books/${id}`, {
         method: 'PATCH', // <- atualizado para PATCH
         headers: {
           'Content-Type': 'application/json',

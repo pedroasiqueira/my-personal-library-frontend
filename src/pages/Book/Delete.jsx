@@ -6,7 +6,7 @@ const Delete = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { getBookById, deleteBook, loading } = useBooks();
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const book = getBookById(id); // ID como string
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -18,7 +18,7 @@ const Delete = () => {
     try {
       const token = localStorage.getItem('access_token');
 
-      const response = await fetch(`http://localhost:3000/books/${id}`, {
+      const response = await fetch(`${apiUrl}/books/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
