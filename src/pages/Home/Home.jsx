@@ -1,11 +1,84 @@
-function Home() {
-    return (
-      <div className="text-center mt-10">
-        <h1 className="text-2xl font-bold">Página Home</h1>
-        <p className="text-gray-600 mt-2">Você está logado!</p>
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useBooks } from '../../context/BookContext';
+
+const Home = () => {
+  const navigate = useNavigate();
+  const { books, loading } = useBooks();
+
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'lido':
+        return 'bg-green-100 text-green-700';
+      case 'lendo':
+        return 'bg-yellow-100 text-yellow-700';
+      case 'quero ler':
+        return 'bg-blue-100 text-blue-700';
+      default:
+        return 'bg-gray-100 text-gray-700';
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-4 md:p-8">
+      <div className="max-w-3xl mx-auto">
+        <header className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-gray-800">Minha Estante Digital</h1>
+          <button
+            onClick={() => navigate('/create')}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+          >
+            Adicionar Livro
+          </button>
+        </header>
+
+        {loading ? (
+          <p className="text-center text-gray-600">Carregando livros...</p>
+        ) : (
+          <div className="space-y-4">
+            {books.map((book) => (
+              <div
+                key={book.id}
+                className="bg-white shadow-md rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
+              >
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-800">{book.title}</h2>
+                  <p className="text-gray-600">Autor: {book.author}</p>
+                </div>
+                <div className="flex flex-col sm:items-end sm:text-right mt-2 sm:mt-0">
+                  <span
+                    className={`px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(
+                      book.status
+                    )}`}
+                  >
+                    {book.status}
+                  </span>
+                  {book.avaliation && (
+                    <p className="mt-1 text-yellow-500">Avaliação: {book.avaliation} ⭐</p>
+                  )}
+                  <div className="flex gap-2 mt-3">
+                    <button
+                      onClick={() => navigate(`/edit/${book.id}`)}
+                      className="text-sm bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => navigate(`/delete/${book.id}`)}
+                      className="text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
+                    >
+                      Apagar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    );
-  }
-  
-  export default Home;
-  
+    </div>
+  );
+};
+
+export default Home;

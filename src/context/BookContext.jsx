@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import mockBooks from '../assets/booksArray';
 
 // Criação do contexto
 const BookContext = createContext();
@@ -6,6 +7,18 @@ const BookContext = createContext();
 // Provider
 export function BookProvider({ children }) {
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBooks = () => {
+      setTimeout(() => {
+        setBooks(mockBooks);
+        setLoading(false);
+      }, 1000);
+    };
+
+    fetchBooks();
+  }, []);
 
   const addBook = (book) => {
     setBooks((prev) => [...prev, book]);
@@ -25,14 +38,13 @@ export function BookProvider({ children }) {
 
   return (
     <BookContext.Provider
-      value={{ books, addBook, editBook, deleteBook, getBookById }}
+      value={{ books, addBook, editBook, deleteBook, getBookById, loading }}
     >
       {children}
     </BookContext.Provider>
   );
 }
 
-// Hook personalizado para consumir o contexto
 export function useBooks() {
   return useContext(BookContext);
 }
