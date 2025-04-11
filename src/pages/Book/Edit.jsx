@@ -74,7 +74,7 @@ const Edit = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 md:p-8">
+    <div className="bg-gray-100 min-h-[calc(100vh-56px)] p-4 md:p-8">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Editar Livro</h1>
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}

@@ -22,7 +22,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 md:p-8">
+    <div className="bg-gray-100 min-h-[calc(100vh-56px)] p-4 md:p-8">
       <div className="max-w-3xl mx-auto">
         <header className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-800">Minha Estante Digital</h1>

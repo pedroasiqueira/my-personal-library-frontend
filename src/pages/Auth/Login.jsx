@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 function Login() {
   const { loginComToken } = useAuth();
@@ -50,6 +51,11 @@ function Login() {
       setLoading(false);
     }
   };
+
+  const { isAuthenticated } = useAuth();
+  if (isAuthenticated) {
+    return <Navigate to="/home" />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

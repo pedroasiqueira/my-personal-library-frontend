@@ -6,9 +6,10 @@ import Create from './pages/Book/Create';
 import Edit from './pages/Book/Edit';
 import Delete from './pages/Book/Delete';
 import PrivateRoute from './routes/PrivateRoute';
-
+import Layout from './components/Layout';
 function App() {
   return (
+    <>
     <BrowserRouter>
       <Routes>
         {/* Rotas públicas */}
@@ -17,16 +18,19 @@ function App() {
 
         {/* Rotas protegidas */}
         <Route element={<PrivateRoute />}>
+        <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/create" element={<Create />} />
           <Route path="/edit/:id" element={<Edit />} />
           <Route path="/delete/:id" element={<Delete />} />
         </Route>
+      </Route>
 
         {/* Redirecionamento para rota padrão */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
+    </>
   );
 }
 
