@@ -110,7 +110,7 @@ const BookForm = ({
           onClick={() => navigate(-1)}
           className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium px-6 py-2 rounded-lg"
         >
-          Voltar
+          Cancelar
         </button>
 
         <button
