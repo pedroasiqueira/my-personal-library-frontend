@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBooks } from '../../context/BookContext';
+import { Star, Trash2, Pencil } from 'lucide-react';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -54,20 +55,27 @@ const Home = () => {
                   >
                     {book.status}
                   </span>
-                  {book.avaliation && (
-                    <p className="mt-1 text-yellow-500">Avaliação: {book.avaliation} ⭐</p>
+                  {book.avaliation > 0 && (
+                    <div
+                      className="mt-1 flex space-x-1 cursor-default"
+                      title="Avaliação"
+                    >
+                      {Array.from({ length: book.avaliation }).map((_, i) => (
+                        <Star  key={i} className="w-5 h-5 text-yellow-500 fill-current stroke-none" />
+                      ))}
+                    </div>
                   )}
                   <div className="flex gap-2 mt-3">
                     <button
                       onClick={() => navigate(`/edit/${book._id}`)}
-                      className="text-sm bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md"
-                    >
+                      className="flex items-center gap-1 text-sm bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md"
+                    ><Pencil className="w-3.5 mr-1" />
                       Editar
                     </button>
                     <button
                       onClick={() => navigate(`/delete/${book._id}`)}
-                      className="text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
-                    >
+                      className="flex items-center text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
+                    ><Trash2 className="w-4 mr-1" />
                       Apagar
                     </button>
                   </div>

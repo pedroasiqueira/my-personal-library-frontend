@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useBooks } from '../../context/BookContext';
-
+import { Trash2 } from 'lucide-react';
 const Delete = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -71,9 +71,9 @@ const Delete = () => {
             onClick={handleDelete}
             disabled={isSubmitting}
             className={`px-4 py-2 rounded-lg text-white ${
-              isSubmitting ? 'bg-red-400' : 'bg-red-600 hover:bg-red-700'
+              isSubmitting ? 'flex items-center bg-red-400' : 'flex items-center bg-red-600 hover:bg-red-700'
             }`}
-          >
+          ><Trash2 className="w-4 mr-1" />
             {isSubmitting ? 'Apagando...' : 'Apagar'}
           </button>
         </div>
