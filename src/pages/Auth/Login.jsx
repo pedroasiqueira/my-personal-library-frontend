@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-
 function Login() {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
@@ -13,7 +12,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     login(email, password);
-    navigate('/home'); // redireciona após login
+    navigate('/home');
   };
 
   return (
@@ -48,6 +47,18 @@ function Login() {
             Entrar
           </button>
         </form>
+
+        <div className="text-center mt-4">
+          <p className="text-sm text-gray-600">
+            Não tem conta ainda?{' '}
+            <button
+              onClick={() => navigate('/register')}
+              className="text-blue-600 hover:underline font-medium"
+            >
+              Registre-se aqui
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   );
