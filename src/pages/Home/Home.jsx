@@ -22,8 +22,8 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-[calc(100vh-56px)] p-4 md:p-8">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-[calc(100vh-56px)] p-4 md:p-8 bg-gradient-to-b from-indigo-100/60 via-purple-100/40 to-pink-100/20">
+      <div className="max-w-5xl mx-auto">
         <header className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-800">Minha Estante Digital</h1>
           <button
@@ -37,52 +37,59 @@ const Home = () => {
         {loading ? (
           <p className="text-center text-gray-600">Carregando livros...</p>
         ) : (
-          <div className="space-y-4">
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
             {books.map((book) => (
-              <div
-                key={book.id}
-                className="bg-white shadow-md rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
+              <article
+                key={book._id}
+                className="relative flex flex-col justify-between rounded-2xl border border-gray-200 bg-white/60 backdrop-blur shadow-sm transition hover:shadow-lg hover:-translate-y-1"
               >
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-800">{book.title}</h2>
-                  <p className="text-gray-600">Autor: {book.author}</p>
-                </div>
-                <div className="flex flex-col sm:items-end sm:text-right mt-2 sm:mt-0">
+                {/* corpo do card */}
+                <div className="p-5">
+                  <h2 className="text-lg font-bold text-gray-800 line-clamp-2">{book.title}</h2>
+                  <p className="mt-1 text-sm text-gray-500">Autor: {book.author}</p>
+
+                  {/* badge de status */}
                   <span
-                    className={`px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(
+                    className={`mt-3 inline-flex items-center gap-1 rounded-full px-3 py-0.5 text-xs font-semibold ${getStatusColor(
                       book.status
                     )}`}
                   >
+                    {/* pontinho de cor */}
+                    <span className="h-1.5 w-1.5 rounded-full bg-current"></span>
                     {book.status}
                   </span>
+
+                  {/* avaliação */}
                   {book.avaliation > 0 && (
-                    <div
-                      className="mt-1 flex space-x-1 cursor-default"
-                      title="Avaliação"
-                    >
+                    <div className="mt-3 flex gap-1 text-yellow-400" title="Avaliação">
                       {Array.from({ length: book.avaliation }).map((_, i) => (
-                        <Star  key={i} className="w-5 h-5 text-yellow-500 fill-current stroke-none" />
+                        <Star key={i} className="w-5 h-5 fill-current stroke-none" />
                       ))}
                     </div>
                   )}
-                  <div className="flex gap-2 mt-3">
-                    <button
-                      onClick={() => navigate(`/edit/${book._id}`)}
-                      className="flex items-center gap-1 text-sm bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md"
-                    ><Pencil className="w-3.5 mr-1" />
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => navigate(`/delete/${book._id}`)}
-                      className="flex items-center text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
-                    ><Trash2 className="w-4 mr-1" />
-                      Apagar
-                    </button>
-                  </div>
                 </div>
-              </div>
+
+                {/* botões */}
+                <div className="flex justify-end gap-2 border-t border-gray-200 p-4">
+                  <button
+                    onClick={() => navigate(`/edit/${book._id}`)}
+                    className="flex items-center gap-1 rounded-lg bg-yellow-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-yellow-600"
+                  >
+                    <Pencil className="h-4 w-4" />
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => navigate(`/delete/${book._id}`)}
+                    className="flex items-center gap-1 rounded-lg bg-red-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-red-600"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Apagar
+                  </button>
+                </div>
+              </article>
             ))}
           </div>
+
         )}
       </div>
     </div>

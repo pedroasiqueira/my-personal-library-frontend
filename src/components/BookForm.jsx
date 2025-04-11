@@ -107,7 +107,7 @@ const BookForm = ({
           <option value="">Selecione...</option>
           <option value="lido">Lido</option>
           <option value="lendo">Lendo</option>
-          <option value="quero ler">Quero ler</option>
+          <option value="quero-ler">Quero ler</option>
         </select>
       </div>
 
