@@ -26,16 +26,34 @@ const Home = () => {
       <div className="max-w-5xl mx-auto">
         <header className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-800">Minha Estante Digital</h1>
-          <button
-            onClick={() => navigate('/create')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
-          >
-            Adicionar Livro
-          </button>
+          {!loading && books.length > 0 && (
+            <button
+              onClick={() => navigate('/create')}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+            >
+              Adicionar Livro
+            </button>
+          )}
         </header>
 
         {loading ? (
           <p className="text-center text-gray-600">Carregando livros...</p>
+        ) : books.length === 0 ? (
+          <div className="flex flex-col items-center justify-center text-center bg-white/60 backdrop-blur rounded-xl p-10 shadow-sm border border-dashed border-gray-300">
+            <div className="text-5xl mb-4 animate-bounce">📚</div>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">
+              Vamos adicionar seu primeiro livro!
+            </h2>
+            <p className="text-gray-600 mb-4 max-w-xs">
+              Comece sua estante digital com um novo título. É rápido e fácil!
+            </p>
+            <button
+              onClick={() => navigate('/create')}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition"
+            >
+              Adicionar Livro
+            </button>
+          </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
             {books.map((book) => (
