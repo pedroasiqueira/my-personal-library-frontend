@@ -1,23 +1,23 @@
 import { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 function Register() {
-  const { register } = useAuth();
+  const { loginComToken } = useAuth(); // Função que autentica com o token
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const validateEmail = (email) => {
-    // Regex simples para validar e-mail
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     if (!name || !email || !password) {
@@ -31,9 +31,35 @@ function Register() {
     }
 
     setError('');
-    register(email, password);
-    console.log('Usuário registrado:', { name, email });
-    navigate('/home');
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:3000/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Erro ao registrar usuário.');
+      }
+
+      const data = await response.json();
+      const token = data.access_token;
+
+      localStorage.setItem('access_token', token); // se quiser usar direto
+
+      loginComToken(token); // atualiza contexto (ajuste conforme seu AuthContext)
+      navigate('/home');
+    } catch (err) {
+      console.error(err);
+      setError(err.message || 'Erro ao criar conta.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -49,6 +75,7 @@ function Register() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Seu nome"
+              disabled={loading}
             />
           </div>
           <div>
@@ -59,6 +86,7 @@ function Register() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="seu@email.com"
+              disabled={loading}
             />
           </div>
           <div>
@@ -69,6 +97,7 @@ function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="********"
+              disabled={loading}
             />
           </div>
 
@@ -76,9 +105,12 @@ function Register() {
 
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+            disabled={loading}
+            className={`w-full text-white py-2 rounded-lg transition ${
+              loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
+            }`}
           >
-            Criar conta
+            {loading ? 'Criando sua conta...' : 'Criar conta'}
           </button>
         </form>
 
@@ -88,6 +120,7 @@ function Register() {
             <button
               onClick={() => navigate('/')}
               className="text-green-600 hover:underline font-medium"
+              disabled={loading}
             >
               Faça login aqui
             </button>

@@ -3,16 +3,52 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const { login } = useAuth();
+  const { loginComToken } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
-    navigate('/home');
+
+    if (!email || !password) {
+      setError('Preencha todos os campos.');
+      return;
+    }
+
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Falha no login.');
+      }
+
+      const data = await response.json();
+      const token = data.access_token;
+
+      localStorage.setItem('access_token', token); // opcional, se quiser usar direto depois
+      loginComToken(token); // autentica no contexto
+
+      navigate('/home');
+    } catch (err) {
+      console.error(err);
+      setError(err.message || 'Erro ao fazer login.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -28,6 +64,7 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="seu@email.com"
+              disabled={loading}
             />
           </div>
           <div>
@@ -38,13 +75,20 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="********"
+              disabled={loading}
             />
           </div>
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            disabled={loading}
+            className={`w-full text-white py-2 rounded-lg transition ${
+              loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+            }`}
           >
-            Entrar
+            {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
 
@@ -54,6 +98,7 @@ function Login() {
             <button
               onClick={() => navigate('/register')}
               className="text-blue-600 hover:underline font-medium"
+              disabled={loading}
             >
               Registre-se aqui
             </button>
