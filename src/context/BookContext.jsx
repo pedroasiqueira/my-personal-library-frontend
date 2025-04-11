@@ -1,13 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useAuth } from './AuthContext'; // certifique-se de que o caminho esteja correto
 
 const BookContext = createContext();
 
 export function BookProvider({ children }) {
+  const { isAuthenticated } = useAuth();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBooks = async () => {
+      setLoading(true); // <- importante caso precise recarregar após login
+
       try {
         const token = localStorage.getItem('access_token');
 
@@ -22,17 +26,19 @@ export function BookProvider({ children }) {
         }
 
         const data = await response.json();
-        setBooks(data); // ← se precisar ajustar o formato, avise
+        setBooks(data);
       } catch (error) {
         console.error('Erro ao buscar livros:', error);
-        setBooks([]); // garante que a tela não quebre
+        setBooks([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBooks();
-  }, []);
+    if (isAuthenticated) {
+      fetchBooks();
+    }
+  }, [isAuthenticated]); // ← vai reexecutar sempre que o login acontecer
 
   const addBook = (book) => {
     setBooks((prev) => [...prev, book]);
