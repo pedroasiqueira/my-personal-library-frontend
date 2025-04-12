@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import DarkModeToggle from './DarkModeToggle';
+// import DarkModeToggle from './DarkModeToggle';
 
 const Header = () => {
   const { logout, isAuthenticated } = useAuth();
@@ -18,7 +18,7 @@ const Header = () => {
       <div className="text-sm font-semibold text-gray-200">Estante Digital</div>
 
       <div className="flex items-center gap-4">
-        <DarkModeToggle />
+        {/* <DarkModeToggle /> */}
         <button
           onClick={handleLogout}
           className="bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-1 rounded-md text-sm"
