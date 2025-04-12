@@ -70,8 +70,6 @@ const Home = () => {
           )}
         </header>
 
-
-
         {loading ? (
           <p className="text-center text-gray-600">Carregando livros...</p>
         ) : books.length === 0 ? (

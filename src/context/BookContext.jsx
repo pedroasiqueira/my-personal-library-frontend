@@ -11,7 +11,7 @@ export function BookProvider({ children }) {
 
   useEffect(() => {
     const fetchBooks = async () => {
-      setLoading(true); // <- importante caso precise recarregar após login
+      setLoading(true);
 
       try {
         const token = localStorage.getItem('access_token');
@@ -27,7 +27,8 @@ export function BookProvider({ children }) {
         }
 
         const data = await response.json();
-        setBooks(data);
+        const sortedBooks = data.sort((a, b) => b._id.localeCompare(a._id));
+        setBooks(sortedBooks);
       } catch (error) {
         console.error('Erro ao buscar livros:', error);
         setBooks([]);
@@ -42,7 +43,7 @@ export function BookProvider({ children }) {
   }, [isAuthenticated, apiUrl]); // ← vai reexecutar sempre que o login acontecer
 
   const addBook = (book) => {
-    setBooks((prev) => [...prev, book]);
+    setBooks((prev) => [book,...prev]);
   };
 
   const editBook = (id, updatedBook) => {
