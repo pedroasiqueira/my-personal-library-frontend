@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      - REACT_APP_API_URL=http://localhost:3000
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
