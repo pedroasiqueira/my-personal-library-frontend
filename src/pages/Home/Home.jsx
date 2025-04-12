@@ -29,7 +29,7 @@ const Home = () => {
     const container = document.createElement('div');
     container.innerHTML = html;
     document.body.appendChild(container);
-  
+
     html2pdf()
       .set({
         margin: 10,
@@ -44,30 +44,32 @@ const Home = () => {
         document.body.removeChild(container);
       });
   };
-  
+
 
   return (
     <div className="min-h-[calc(100vh-56px)] p-4 md:p-8 bg-gradient-to-b from-indigo-100/60 via-purple-100/40 to-pink-100/20">
       <div className="max-w-5xl mx-auto">
-      <header className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Minha Estante Digital</h1>
-        {!loading && books.length > 0 && (
-          <div className="flex gap-3">
-            <button
-              onClick={exportToPdf}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition"
-            >
-              Exportar PDF
-            </button>
-            <button
-              onClick={() => navigate('/create')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
-            >
-              Adicionar Livro
-            </button>
-          </div>
-        )}
-      </header>
+        <header className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 text-center sm:text-left">
+          <h1 className="text-2xl font-bold text-gray-800">Minha Estante Digital</h1>
+
+          {!loading && books.length > 0 && (
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={exportToPdf}
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition"
+              >
+                Exportar PDF
+              </button>
+              <button
+                onClick={() => navigate('/create')}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+              >
+                Adicionar Livro
+              </button>
+            </div>
+          )}
+        </header>
+
 
 
         {loading ? (
