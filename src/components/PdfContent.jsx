@@ -7,7 +7,7 @@ const PdfContent = ({ books }) => {
         background: '#fff',
         color: '#000',
         padding: '32px',
-        width: '1000px',
+        width: '730px',
         fontFamily: 'Arial, sans-serif',
         fontSize: '14px',
       }}
@@ -16,39 +16,28 @@ const PdfContent = ({ books }) => {
         Meus livros 📚
       </h2>
 
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <table
+        style={{
+          width: '100%',
+          borderCollapse: 'collapse',
+          tableLayout: 'fixed',
+        }}
+      >
         <thead>
           <tr style={{ backgroundColor: '#f3f3f3' }}>
-            <th style={thStyle}>Título</th>
-            <th style={thStyle}>Autor</th>
-            <th style={thStyle}>Status</th>
-            <th style={thStyle}>Avaliação</th>
+            <th style={{ ...thStyle, width: '60%' }}>Título</th>
+            <th style={{ ...thStyle, width: '40%' }}>Autor</th>
           </tr>
         </thead>
         <tbody>
           {books.map((book) => (
             <tr key={book._id}>
               <td style={tdStyle}>
-                <strong style={{ fontSize: '15px', color: '#222' }}>{book.title}</strong>
+                <strong style={{ fontSize: '15px', color: '#222', wordWrap: 'break-word', whiteSpace: 'pre-wrap' }}>
+                  {book.title}
+                </strong>
               </td>
-              <td style={tdStyle}>
-                <span style={{ color: '#555' }}>{book.author}</span>
-              </td>
-              <td style={tdStyle}>
-                <span
-                  style={{
-                    backgroundColor: '#eee',
-                    padding: '2px 6px',
-                    borderRadius: '4px',
-                    fontSize: '12px',
-                  }}
-                >
-                  {book.status}
-                </span>
-              </td>
-              <td style={tdStyle}>
-                {book.avaliation > 0 ? '★'.repeat(book.avaliation) : '-'}
-              </td>
+              <td style={{ ...tdStyle, wordWrap: 'break-word', whiteSpace: 'pre-wrap' }}>{book.author}</td>
             </tr>
           ))}
         </tbody>
@@ -69,6 +58,8 @@ const tdStyle = {
   padding: '10px',
   borderBottom: '1px solid #ddd',
   verticalAlign: 'top',
+  wordBreak: 'break-word',
+  whiteSpace: 'pre-wrap',
 };
 
 export default PdfContent;
