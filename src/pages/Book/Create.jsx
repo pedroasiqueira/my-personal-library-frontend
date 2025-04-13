@@ -100,7 +100,7 @@ const Create = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-56px)] p-4 md:p-8 bg-gradient-to-b from-indigo-100/60 via-purple-100/40 to-pink-100/20 p-4 md:p-8">
+    <div className="min-h-[calc(100vh-56px)] p-4 md:p-8 bg-gradient-to-b from-indigo-400/60 via-purple-400/40 to-pink-400/20 p-4 md:p-8">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Adicionar Novo Livro</h1>
         {error && !error.toLowerCase().includes('avaliação') && (
