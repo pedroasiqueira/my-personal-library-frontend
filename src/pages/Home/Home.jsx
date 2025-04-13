@@ -89,7 +89,7 @@ const Home = () => {
             </button>
           </div>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {books.map((book) => (
               <article
                 key={book._id}
@@ -112,6 +112,8 @@ const Home = () => {
                     {book.status}
                   </span>
 
+                  <p className="mt-1 text-sm text-gray-500">Inicio de leitura: {new Date(book.startDate).toLocaleDateString('pt-BR')}</p>
+
                   {/* avaliação */}
                   {book.avaliation > 0 && (
                     <div className="mt-3 flex gap-1 text-yellow-400" title="Avaliação">
@@ -123,7 +125,7 @@ const Home = () => {
                 </div>
 
                 {/* botões */}
-                <div className="flex justify-end gap-2 border-t border-gray-200 p-4">
+                <div className="flex justify-between gap-2 border-t border-gray-200 p-4">
                   <button
                       onClick={(e) => {
                         e.stopPropagation();
