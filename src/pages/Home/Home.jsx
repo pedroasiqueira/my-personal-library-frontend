@@ -93,7 +93,8 @@ const Home = () => {
             {books.map((book) => (
               <article
                 key={book._id}
-                className="relative flex flex-col justify-between rounded-2xl border border-gray-200 bg-white/60 backdrop-blur shadow-sm transition hover:shadow-lg hover:-translate-y-1"
+                onClick={() => navigate(`/details/${book._id}`)}
+                className="relative flex flex-col justify-between rounded-2xl border border-gray-200 bg-white/60 backdrop-blur shadow-sm transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
               >
                 {/* corpo do card */}
                 <div className="p-5">
@@ -124,14 +125,20 @@ const Home = () => {
                 {/* botões */}
                 <div className="flex justify-end gap-2 border-t border-gray-200 p-4">
                   <button
-                    onClick={() => navigate(`/edit/${book._id}`)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/edit/${book._id}`);
+                      }}
                     className="flex items-center gap-1 rounded-lg bg-yellow-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-yellow-600"
                   >
                     <Pencil className="h-4 w-4" />
                     Editar
                   </button>
                   <button
-                    onClick={() => navigate(`/delete/${book._id}`)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/delete/${book._id}`);
+                      }}
                     className="flex items-center gap-1 rounded-lg bg-red-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-red-600"
                   >
                     <Trash2 className="h-4 w-4" />
