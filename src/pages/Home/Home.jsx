@@ -47,7 +47,7 @@ const Home = () => {
 
 
   return (
-    <div className="min-h-[calc(100vh-56px)] p-4 md:p-8 bg-gradient-to-b from-indigo-400/60 via-purple-400/40 to-pink-400/20">
+    <div className="min-h-[calc(100vh-56px)] p-4 md:p-8 bg-gradient-to-b from-blue-500/60 via-indigo-300/50 to-blue-100/40">
       <div className="max-w-5xl mx-auto">
         <header className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 text-center sm:text-left">
           <h1 className="text-2xl font-bold text-gray-800">Minha Estante Digital</h1>
