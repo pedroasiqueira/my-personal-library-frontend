@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import BookForm from '../../components/BookForm';
 import { useBooks } from '../../context/BookContext';
 import { useEffect } from 'react';
+import ErrorMessage from '../Auth/ErrorMessage';
+import { getErrorMessage } from '../../utils/getErrorMessage';
+
 
 const Create = () => {
   const navigate = useNavigate();
@@ -86,8 +89,7 @@ const Create = () => {
       addBook(newBook); // adiciona no contexto
       navigate('/home');
     } catch (err) {
-      console.error('Erro ao criar livro:', err);
-      setError(err.message || 'Erro desconhecido.');
+      setError(getErrorMessage(err, 'Erro ao criar livro.'));
     } finally {
       setLoading(false);
     }
@@ -97,6 +99,7 @@ const Create = () => {
     <div className="min-h-[calc(100vh-56px)] p-4 md:p-8 bg-gradient-to-b from-indigo-100/60 via-purple-100/40 to-pink-100/20 p-4 md:p-8">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Adicionar Novo Livro</h1>
+        <ErrorMessage message={error} />
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-1">Buscar livro no Google Books</label>
           <input
@@ -127,7 +130,6 @@ const Create = () => {
           )}
         </div>
 
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         <BookForm
           formData={formData}
           setFormData={setFormData}

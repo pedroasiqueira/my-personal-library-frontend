@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useBooks } from '../../context/BookContext';
 import BookForm from '../../components/BookForm';
+import ErrorMessage from '../Auth/ErrorMessage';
+import { getErrorMessage } from '../../utils/getErrorMessage';
 
 const Edit = () => {
   const navigate = useNavigate();
@@ -59,8 +61,7 @@ const Edit = () => {
       editBook(id, updatedBook); // atualiza no contexto
       navigate('/home');
     } catch (err) {
-      console.error('Erro ao editar livro:', err);
-      setError(err.message || 'Erro desconhecido.');
+      setError(getErrorMessage(err, 'Erro ao criar livro.'));
     } finally {
       setIsSubmitting(false);
     }
@@ -78,7 +79,7 @@ const Edit = () => {
     <div className="min-h-[calc(100vh-56px)] p-4 md:p-8 bg-gradient-to-b from-indigo-100/60 via-purple-100/40 to-pink-100/20">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Editar Livro</h1>
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        <ErrorMessage message={error} />
         <BookForm
           formData={formData}
           setFormData={setFormData}

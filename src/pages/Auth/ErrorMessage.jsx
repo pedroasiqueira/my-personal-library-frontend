@@ -1,4 +1,4 @@
-function AuthError({ message }) {
+function ErrorMessage({ message }) {
     if (!message) return null;
   
     return (
@@ -8,5 +8,5 @@ function AuthError({ message }) {
     );
   }
   
-  export default AuthError;
+  export default ErrorMessage;
   

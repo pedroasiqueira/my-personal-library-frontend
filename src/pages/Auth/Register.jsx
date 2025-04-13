@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import AuthError from './AuthError';
+import ErrorMessage from './ErrorMessage';
 
 
 function Register() {
@@ -110,7 +110,7 @@ function Register() {
             />
           </div>
 
-          <AuthError message={error} />
+          <ErrorMessage message={error} />
 
           <button
             type="submit"
