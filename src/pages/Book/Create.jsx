@@ -60,6 +60,10 @@ const Create = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.avaliation === 0) {
+      setError('Por favor, selecione uma avaliação.');
+      return;
+    }
     setLoading(true);
     setError('');
 
@@ -99,7 +103,10 @@ const Create = () => {
     <div className="min-h-[calc(100vh-56px)] p-4 md:p-8 bg-gradient-to-b from-indigo-100/60 via-purple-100/40 to-pink-100/20 p-4 md:p-8">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Adicionar Novo Livro</h1>
-        <ErrorMessage message={error} />
+        {error && !error.toLowerCase().includes('avaliação') && (
+          <ErrorMessage message={error} />
+        )}
+
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-1">Buscar livro no Google Books</label>
           <input
@@ -135,6 +142,7 @@ const Create = () => {
           setFormData={setFormData}
           handleSubmit={handleSubmit}
           isSubmitting={loading}
+          error={error}
         />
       </div>
     </div>

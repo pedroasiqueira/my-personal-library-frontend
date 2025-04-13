@@ -31,6 +31,10 @@ const Edit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.avaliation === 0) {
+      setError('Por favor, selecione uma avaliação.');
+      return;
+    }
     setIsSubmitting(true);
     setError('');
 
@@ -79,13 +83,17 @@ const Edit = () => {
     <div className="min-h-[calc(100vh-56px)] p-4 md:p-8 bg-gradient-to-b from-indigo-100/60 via-purple-100/40 to-pink-100/20">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Editar Livro</h1>
-        <ErrorMessage message={error} />
+        {error && !error.toLowerCase().includes('avaliação') && (
+          <ErrorMessage message={error} />
+        )}
+
         <BookForm
           formData={formData}
           setFormData={setFormData}
           handleSubmit={handleSubmit}
           isEdit
           isSubmitting={isSubmitting}
+          error={error}
         />
       </div>
     </div>

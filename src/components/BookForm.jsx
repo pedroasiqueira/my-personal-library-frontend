@@ -9,6 +9,7 @@ const BookForm = ({
   handleSubmit,
   isEdit = false,
   isSubmitting = false,
+  error,
 }) => {
   const navigate = useNavigate();
 
@@ -113,24 +114,14 @@ const BookForm = ({
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-1">
-          <label className="text-sm font-medium text-gray-700">Avaliação<RequiredInput /></label>
-          {formData.avaliation > 0 && (
-            <button
-              type="button"
-              onClick={clearAvaliation}
-              className="text-xs text-red-600 hover:underline"
-            >
-              Zerar
-            </button>
-          )}
-        </div>
         <div className="flex space-x-1">
           {[1, 2, 3, 4, 5].map((star) => (
             <button
               type="button"
               key={star}
               onClick={() => handleAvaliationChange(star)}
+              required
+              min={1}
               disabled={isSubmitting}
               className={`text-2xl ${
                 star <= formData.avaliation ? 'text-yellow-400' : 'text-gray-300'
@@ -140,6 +131,9 @@ const BookForm = ({
             </button>
           ))}
         </div>
+        {formData.avaliation === 0 && error?.toLowerCase().includes('avaliação') && (
+          <p className="text-red-500 text-sm mt-1">Por favor, selecione uma avaliação.</p>
+        )}
       </div>
 
       <div className="flex flex-col-reverse sm:flex-row justify-between gap-3">
