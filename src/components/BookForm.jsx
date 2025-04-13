@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Save } from 'lucide-react';
+import RequiredInput from './RequiredInput';
 
 const BookForm = ({
   formData,
@@ -31,7 +32,7 @@ const BookForm = ({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Título</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Título<RequiredInput /></label>
         <input
           type="text"
           name="title"
@@ -44,7 +45,7 @@ const BookForm = ({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Autor</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Autor<RequiredInput /></label>
         <input
           type="text"
           name="author"
@@ -58,7 +59,7 @@ const BookForm = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Data de início</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Data de início<RequiredInput /></label>
           <input
             type="date"
             name="startDate"
@@ -95,7 +96,7 @@ const BookForm = ({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Status da leitura</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Status da leitura<RequiredInput /></label>
         <select
           name="status"
           value={formData.status}
@@ -113,7 +114,7 @@ const BookForm = ({
 
       <div>
         <div className="flex items-center justify-between mb-1">
-          <label className="text-sm font-medium text-gray-700">Avaliação</label>
+          <label className="text-sm font-medium text-gray-700">Avaliação<RequiredInput /></label>
           {formData.avaliation > 0 && (
             <button
               type="button"
