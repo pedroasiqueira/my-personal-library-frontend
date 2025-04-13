@@ -1,4 +1,3 @@
-// src/components/PdfContent.jsx
 import React from 'react';
 
 const PdfContent = ({ books }) => {

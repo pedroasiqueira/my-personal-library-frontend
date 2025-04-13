@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import AuthError from './AuthError';
+
 
 function Register() {
   const { loginComToken } = useAuth(); // Função que autentica com o token
@@ -56,7 +58,14 @@ function Register() {
       navigate('/home');
     } catch (err) {
       console.error(err);
-      setError(err.message || 'Erro ao criar conta.');
+    
+      if (err.message === 'Failed to fetch') {
+        setError('Estamos com instabilidade no momento. Tente novamente em alguns minutos.');
+      } else if (err.message.includes('já está em uso')) {
+        setError(err.message); // mensagem vinda do backend
+      } else {
+        setError('Erro ao criar conta. Tente novamente.');
+      }
     } finally {
       setLoading(false);
     }
@@ -101,7 +110,7 @@ function Register() {
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <AuthError message={error} />
 
           <button
             type="submit"

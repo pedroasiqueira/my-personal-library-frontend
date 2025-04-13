@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
+import AuthError from './AuthError';
+
 
 function Login() {
   const { loginComToken } = useAuth();
@@ -47,7 +49,14 @@ function Login() {
       navigate('/home');
     } catch (err) {
       console.error(err);
-      setError(err.message || 'Erro ao fazer login.');
+    
+      if (err.message === 'Failed to fetch') {
+        setError('Estamos com instabilidade no momento. Tente novamente em alguns minutos.');
+      } else if (err.message.includes('E-mail') || err.message.includes('senha')) {
+        setError(err.message); // mensagem específica do backend
+      } else {
+        setError('Erro ao fazer login.  Confira seus dados e tente novamente.');
+      }
     } finally {
       setLoading(false);
     }
@@ -86,7 +95,7 @@ function Login() {
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <AuthError message={error} />
 
           <button
             type="submit"
