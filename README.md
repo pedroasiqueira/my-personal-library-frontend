@@ -36,8 +36,8 @@ Uma estante digital pessoal composta por **frontend React/Tailwind** e **backend
 Execute **toda a aplicação** em 3 passos (considerando os repositórios clonados lado a lado):
 ```bash
 # 1. Clone ambos os repositórios
-$ git clone https://github.com/pedroasiqueira/my-personal-library-backend
-$ git clone https://github.com/pedroasiqueira/my-personal-library-frontend
+$ git clone git@github.com:pedroasiqueira/my-personal-library-backend.git
+$ git clone git@github.com:pedroasiqueira/my-personal-library-frontend.git
 
 # 2. Suba backend + banco de dados
 $ cd my-personal-library-backend
