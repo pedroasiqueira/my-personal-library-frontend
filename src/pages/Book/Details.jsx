@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Pencil, Trash2 } from 'lucide-react';
+import { formatStatus } from '../../utils/formatStatus';
 function Details() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -124,7 +125,7 @@ function Details() {
         <div className="space-y-2">
           <h1 className="text-2xl font-bold text-gray-800">{book.title}</h1>
           <p className="text-gray-600">Autor: {book.author}</p>
-          <p className="text-gray-600">Status: {book.status}</p>
+          <p className="text-gray-600">Status: {formatStatus(book.status)}</p>
           <p className="text-gray-600">
             Data de início: {new Date(book.startDate).toLocaleDateString('pt-BR')}
           </p>

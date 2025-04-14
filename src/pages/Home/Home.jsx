@@ -5,6 +5,7 @@ import { Star, Trash2, Pencil } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import PdfContent from '../../components/PdfContent';
 import ReactDOMServer from 'react-dom/server';
+import { formatStatus } from '../../utils/formatStatus';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -109,7 +110,7 @@ const Home = () => {
                   >
                     {/* pontinho de cor */}
                     <span className="h-1.5 w-1.5 rounded-full bg-current"></span>
-                    {book.status}
+                    {formatStatus(book.status)}
                   </span>
 
                   <p className="mt-1 text-sm text-gray-500">Inicio de leitura: {new Date(book.startDate).toLocaleDateString('pt-BR')}</p>
